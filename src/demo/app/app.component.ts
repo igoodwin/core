@@ -1,12 +1,18 @@
-import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, NgForm } from '@angular/forms';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import {Component, ElementRef, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {FormControl, NgForm} from '@angular/forms';
+import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 
-import { IKeyboardLayout, MAT_KEYBOARD_LAYOUTS, MatKeyboardComponent, MatKeyboardRef, MatKeyboardService } from '@ngx-material-keyboard/core';
+import {
+  IKeyboardLayout,
+  MAT_KEYBOARD_LAYOUTS,
+  MatKeyboardComponent,
+  MatKeyboardRef,
+  MatKeyboardService
+} from '@ngx-material-keyboard/core';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'mat-keyboard-demo-root',
@@ -20,6 +26,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private _keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
 
   private _submittedForms = new BehaviorSubject<{ control: string, value: string }[][]>([]);
+
+  @ViewChild('container', {read: ElementRef}) viewContainer: ElementRef;
 
   get submittedForms(): Observable<{ control: string, value: string }[][]> {
     return this._submittedForms.asObservable();
@@ -42,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   testModelValue = 'Sushi';
 
-  testControlValue = new FormControl({ value: 'Emmentaler', disabled: false });
+  testControlValue = new FormControl({value: 'Emmentaler', disabled: false});
 
   get keyboardVisible(): boolean {
     return this._keyboardService.isOpened;
@@ -50,7 +58,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private _keyboardService: MatKeyboardService,
               @Inject(LOCALE_ID) public locale,
-              @Inject(MAT_KEYBOARD_LAYOUTS) private _layouts) {}
+              @Inject(MAT_KEYBOARD_LAYOUTS) private _layouts) {
+  }
 
   ngOnInit() {
     this.defaultLocale = ` ${this.locale}`.slice(1);
@@ -83,7 +92,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this._keyboardRef = this._keyboardService.open(locale, {
       darkTheme: this.darkTheme,
       duration: this.duration,
-      isDebug: this.isDebug
+      isDebug: this.isDebug,
+      connectedTo: this.viewContainer,
+      originPos: {originX: 'start', originY: 'bottom'},
+      overlayPos: {overlayX: 'start', overlayY: 'top'}
     });
     this._enterSubscription = this._keyboardRef.instance.enterClick.subscribe(() => {
       this.submitForm();

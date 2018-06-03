@@ -11,9 +11,9 @@
       <section class="row">
         <div class="col">
           <mat-slide-toggle
-              [checked]="isDebug"
-              [disabled]="!keyboardVisible"
-              (change)="toggleDebug($event)"
+            [checked]="isDebug"
+            [disabled]="!keyboardVisible"
+            (change)="toggleDebug($event)"
           >
             Debug special keys
           </mat-slide-toggle>
@@ -21,9 +21,9 @@
 
         <div class="col">
           <mat-slide-toggle
-              [checked]="darkTheme"
-              [disabled]="!keyboardVisible"
-              (change)="toggleDarkTheme($event)"
+            [checked]="darkTheme"
+            [disabled]="!keyboardVisible"
+            (change)="toggleDarkTheme($event)"
           >
             Dark theme
           </mat-slide-toggle>
@@ -33,10 +33,10 @@
       <section class="row">
         <div class="col">
           <button
-              mat-raised-button
-              type="button"
-              (click)="openKeyboard(defaultLocale)"
-              aria-label="Open default keyboard"
+            mat-raised-button
+            type="button"
+            (click)="openKeyboard(defaultLocale)"
+            aria-label="Open default keyboard"
           >
             Open default keyboard ({{defaultLocale}})
           </button>
@@ -44,13 +44,13 @@
 
         <div class="col">
           <mat-select
-              name="layout"
-              [placeholder]="'select layout'"
-              [(ngModel)]="locale"
+            name="layout"
+            [placeholder]="'select layout'"
+            [(ngModel)]="locale"
           >
             <mat-option
-                *ngFor="let layout of layouts"
-                [value]="layout.layout.lang && layout.layout.lang[0] || layout.name"
+              *ngFor="let layout of layouts"
+              [value]="layout.layout.lang && layout.layout.lang[0] || layout.name"
             >
               {{layout.layout.name}}
               <ng-container *ngIf="layout.layout.name !== layout.name">({{layout.name}})</ng-container>
@@ -58,10 +58,10 @@
           </mat-select>
 
           <button
-              mat-raised-button
-              type="button"
-              (click)="openKeyboard(locale)"
-              aria-label="Open selected keyboard"
+            mat-raised-button
+            type="button"
+            (click)="openKeyboard(locale)"
+            aria-label="Open selected keyboard"
           >
             Open selected keyboard ({{locale}})
           </button>
@@ -69,16 +69,19 @@
 
         <div class="col">
           <button
-              mat-raised-button
-              type="button"
-              (click)="closeCurrentKeyboard()"
-              aria-label="Hide the example keyboard"
+            mat-raised-button
+            type="button"
+            (click)="closeCurrentKeyboard()"
+            aria-label="Hide the example keyboard"
           >
             Close keyboard
           </button>
         </div>
       </section>
 
+      <section class="row">
+        <input #container type="text"/>
+      </section>
     </form>
   </mat-tab>
 
@@ -98,12 +101,15 @@
         <div class="col">
           <mat-input-container>
             <input
-                matInput
-                matKeyboard
-                placeholder="From detected locale ({{ locale }})"
-                name="sushi"
-                [(ngModel)]="testModelValue"
-                (enterClick)="submitForm(form)"
+              matInput
+              matKeyboard
+              placeholder="From detected locale ({{ locale }})"
+              name="sushi"
+              [(ngModel)]="testModelValue"
+              (enterClick)="submitForm(form)"
+              [connectedTo]="viewContainer"
+              [originPos]="{originX: 'start', originY: 'bottom'}"
+              [overlayPos]="{overlayX: 'start', overlayY: 'top'}"
             >
             <mat-hint>Using <code>ngModel</code> two way binding</mat-hint>
           </mat-input-container>
@@ -114,14 +120,14 @@
         <div class="col">
           <mat-input-container>
             <input
-                #testSimpleValue
-                type="number"
-                matInput
-                placeholder="Swiss bank combination lock"
-                name="safe"
-                [matKeyboard]="'de-CH'"
-                [value]="123"
-                (enterClick)="submitForm(form)"
+              #testSimpleValue
+              type="number"
+              matInput
+              placeholder="Swiss bank combination lock"
+              name="safe"
+              [matKeyboard]="'de-CH'"
+              [value]="123"
+              (enterClick)="submitForm(form)"
             >
             <mat-hint>Simple <code>Element.value</code> binding</mat-hint>
           </mat-input-container>
@@ -132,12 +138,12 @@
         <div class="col">
           <mat-input-container>
             <input
-                matInput
-                matKeyboard
-                placeholder="Something with cheese"
-                name="emmentaler"
-                [formControl]="testControlValue"
-                (enterClick)="submitForm(form)"
+              matInput
+              matKeyboard
+              placeholder="Something with cheese"
+              name="emmentaler"
+              [formControl]="testControlValue"
+              (enterClick)="submitForm(form)"
             >
             <mat-hint>Reactive binding with <code>formControl</code></mat-hint>
           </mat-input-container>
@@ -148,13 +154,13 @@
         <div class="col">
           <mat-input-container>
             <input
-                matInput
-                ngModel
-                #testModelReference="ngModel"
-                name="azerbaijani"
-                placeholder="Azərbaycanca"
-                [matKeyboard]="'Azərbaycanca'"
-                (enterClick)="submitForm(form)"
+              matInput
+              ngModel
+              #testModelReference="ngModel"
+              name="azerbaijani"
+              placeholder="Azərbaycanca"
+              [matKeyboard]="'Azərbaycanca'"
+              (enterClick)="submitForm(form)"
             >
             <mat-hint><code>ngModel</code> access by template binding</mat-hint>
           </mat-input-container>
@@ -174,15 +180,14 @@
 
         <div class="col">
           <button
-              mat-raised-button
-              type="submit"
-              aria-label="Submit form"
+            mat-raised-button
+            type="submit"
+            aria-label="Submit form"
           >
             Submit
           </button>
         </div>
       </section>
-
     </form>
   </mat-tab>
 
