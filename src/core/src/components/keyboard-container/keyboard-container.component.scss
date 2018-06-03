@@ -11,8 +11,6 @@ $mat-keyboard-max-width: 960px !default;
   margin: 0 auto;
   max-width: $mat-keyboard-max-width;
   min-width: $mat-keyboard-min-width;
-  // Initial transformation is applied to start keyboard out of view.
-  transform: translateY(100%);
 
   @include cdk-high-contrast {
     border: solid 1px;

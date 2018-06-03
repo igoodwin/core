@@ -35,7 +35,8 @@ export const HIDE_ANIMATION = `${AnimationDurations.EXITING} ${AnimationCurves.A
   // ]
   animations: [
     trigger('state', [
-      state(`${KeyboardAnimationState.Visible}`, style({ transform: 'translateY(0%)' })),
+      state(`${KeyboardAnimationState.Visible}`, style({ top: 0 })),
+      state(`${KeyboardAnimationState.Hidden}`, style({ top: '100%' })),
       transition(`${KeyboardAnimationTransition.Hide}`, animate(HIDE_ANIMATION)),
       transition(`${KeyboardAnimationTransition.Show}`, animate(SHOW_ANIMATION))
     ])
