@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "@ngx-material-keyboard/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Onscreen virtual keyboard for Angular ≥ 5 (https://angular.io/) using Material 5 (https://material.angular.io/).",
   "repository": {
     "type": "git",
@@ -18,11 +18,11 @@
   },
   "peerDependencies": {
     "@angular/animations": "^5.0.0",
-    "@angular/cdk": "5.2.2",
+    "@angular/cdk": "5.2.5",
     "@angular/common": "^5.0.0",
     "@angular/core": "^5.0.0",
     "@angular/forms": "^5.0.0",
-    "@angular/material": "5.2.2",
+    "@angular/material": "5.2.5",
     "rxjs": "^5.5.2"
   },
   "ngPackage": {

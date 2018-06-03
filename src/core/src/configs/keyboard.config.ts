@@ -1,6 +1,7 @@
-import { ViewContainerRef } from '@angular/core';
-import { NgControl } from '@angular/forms';
-import { AriaLivePoliteness } from '@angular/cdk/a11y';
+import {AriaLivePoliteness} from '@angular/cdk/a11y';
+import {OriginConnectionPosition, OverlayConnectionPosition} from '@angular/cdk/overlay';
+import {ElementRef, ViewContainerRef} from '@angular/core';
+import {NgControl} from '@angular/forms';
 
 export class MatKeyboardConfig {
   /** The politeness level for the MatAriaLiveAnnouncer announcement. */
@@ -15,12 +16,18 @@ export class MatKeyboardConfig {
   /** The length of time in milliseconds to wait before automatically dismissing the keyboard after blur. */
   duration? = 0;
 
-  /** Enable a dark keyboard **/
+  /** Enable a dark keyboard */
   darkTheme? = null;
 
-  /** Enable the debug view **/
+  /** Enable the debug view */
   isDebug? = false;
 
-  /** Enable the debug view **/
+  /** Enable the debug view */
   ngControl?: NgControl;
+
+  connectedTo?: ElementRef;
+
+  originPos?: OriginConnectionPosition;
+
+  overlayPos?: OverlayConnectionPosition;
 }

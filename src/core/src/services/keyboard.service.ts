@@ -1,17 +1,17 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { ComponentRef, Inject, Injectable, LOCALE_ID, Optional, SkipSelf } from '@angular/core';
+import {LiveAnnouncer} from '@angular/cdk/a11y';
+import {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
+import {ComponentPortal} from '@angular/cdk/portal';
+import {ComponentRef, Inject, Injectable, LOCALE_ID, Optional, SkipSelf} from '@angular/core';
 
-import { MatKeyboardRef } from '../classes/keyboard-ref.class';
-import { MatKeyboardContainerComponent } from '../components/keyboard-container/keyboard-container.component';
-import { MatKeyboardComponent } from '../components/keyboard/keyboard.component';
-import { MAT_KEYBOARD_LAYOUTS } from '../configs/keyboard-layouts.config';
-import { MatKeyboardConfig } from '../configs/keyboard.config';
-import { IKeyboardLayout } from '../interfaces/keyboard-layout.interface';
-import { IKeyboardLayouts } from '../interfaces/keyboard-layouts.interface';
-import { ILocaleMap } from '../interfaces/locale-map.interface';
-import { _applyAvailableLayouts, _applyConfigDefaults } from '../utils/keyboard.utils';
+import {MatKeyboardRef} from '../classes/keyboard-ref.class';
+import {MatKeyboardContainerComponent} from '../components/keyboard-container/keyboard-container.component';
+import {MatKeyboardComponent} from '../components/keyboard/keyboard.component';
+import {MAT_KEYBOARD_LAYOUTS} from '../configs/keyboard-layouts.config';
+import {MatKeyboardConfig} from '../configs/keyboard.config';
+import {IKeyboardLayout} from '../interfaces/keyboard-layout.interface';
+import {IKeyboardLayouts} from '../interfaces/keyboard-layouts.interface';
+import {ILocaleMap} from '../interfaces/locale-map.interface';
+import {_applyAvailableLayouts, _applyConfigDefaults} from '../utils/keyboard.utils';
 
 /**
  * Service to dispatch Material Design keyboard.
@@ -191,7 +191,7 @@ export class MatKeyboardService {
    * Places a new component as the content of the keyboard container.
    */
   private _attachKeyboardContent(config: MatKeyboardConfig): MatKeyboardRef<MatKeyboardComponent> {
-    const overlayRef = this._createOverlay();
+    const overlayRef = this._createOverlay(config);
     const container = this._attachKeyboardContainer(overlayRef, config);
     const portal = new ComponentPortal(MatKeyboardComponent);
     const contentRef = container.attachComponentPortal(portal);
@@ -201,16 +201,25 @@ export class MatKeyboardService {
   /**
    * Creates a new overlay and places it in the correct location.
    */
-  private _createOverlay(): OverlayRef {
+  private _createOverlay(config: MatKeyboardConfig): OverlayRef {
     const state = new OverlayConfig({
       width: '100%'
     });
+
+    if (config.connectedTo) {
+      state.positionStrategy = this._overlay
+        .position()
+        .connectedTo(config.connectedTo, config.originPos, config.overlayPos);
+
+      return this._overlay.create(state);
+    }
 
     state.positionStrategy = this._overlay
       .position()
       .global()
       .centerHorizontally()
       .bottom('0');
+
 
     return this._overlay.create(state);
   }

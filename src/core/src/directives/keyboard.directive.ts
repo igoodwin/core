@@ -1,6 +1,17 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Self } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  Optional,
+  Output,
+  Self
+} from '@angular/core';
 import { NgControl } from '@angular/forms';
 
+import {OriginConnectionPosition, OverlayConnectionPosition} from '@angular/cdk/overlay';
 import { MatKeyboardRef } from '../classes/keyboard-ref.class';
 import { MatKeyboardComponent } from '../components/keyboard/keyboard.component';
 import { MatKeyboardService } from '../services/keyboard.service';
@@ -19,6 +30,12 @@ export class MatKeyboardDirective implements OnDestroy {
   @Input() duration: number;
 
   @Input() isDebug: boolean;
+
+  @Input() connectedTo?: ElementRef;
+
+  @Input() originPos?: OriginConnectionPosition;
+
+  @Input() overlayPos?: OverlayConnectionPosition;
 
   @Output() enterClick: EventEmitter<void> = new EventEmitter<void>();
 
@@ -41,7 +58,10 @@ export class MatKeyboardDirective implements OnDestroy {
     this._keyboardRef = this._keyboardService.open(this.matKeyboard, {
       darkTheme: this.darkTheme,
       duration: this.duration,
-      isDebug: this.isDebug
+      isDebug: this.isDebug,
+      connectedTo: this.connectedTo,
+      originPos: this.originPos,
+      overlayPos: this.overlayPos
     });
 
     // reference the input element
